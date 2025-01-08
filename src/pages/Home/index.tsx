@@ -17,7 +17,10 @@ export function Home() {
         <div>
           <button type="button">
             <div className="button-style">
-              <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+              <div className="cart-sum">
+                <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+                <p>0</p>
+              </div>
               <p>ADICIONAR AO CARRINHO</p>
             </div>
           </button>
@@ -33,7 +36,10 @@ export function Home() {
         <div>
           <button type="button">
             <div className="button-style">
-              <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+              <div className="cart-sum">
+                <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+                <p>0</p>
+              </div>
               <p>ADICIONAR AO CARRINHO</p>
             </div>
           </button>
@@ -49,13 +55,15 @@ export function Home() {
         <div>
           <button type="button">
             <div className="button-style">
-              <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+              <div className="cart-sum">
+                <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+                <p>0</p>
+              </div>
               <p>ADICIONAR AO CARRINHO</p>
             </div>
           </button>
         </div>
       </li>
-
       <li>
         <div className="header">
           <img src={shoesTwoPNG} alt="tênis" className="shoes" />
@@ -66,13 +74,15 @@ export function Home() {
         <div>
           <button type="button">
             <div className="button-style">
-              <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+              <div className="cart-sum">
+                <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+                <p>0</p>
+              </div>
               <p>ADICIONAR AO CARRINHO</p>
             </div>
           </button>
         </div>
       </li>
-
       <li>
         <div className="header">
           <img src={shoesThreePNG} alt="tênis" className="shoes" />
@@ -83,13 +93,15 @@ export function Home() {
         <div>
           <button type="button">
             <div className="button-style">
-              <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+              <div className="cart-sum">
+                <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+                <p>0</p>
+              </div>
               <p>ADICIONAR AO CARRINHO</p>
             </div>
           </button>
         </div>
       </li>
-
       <li>
         <div className="header">
           <img src={shoesOnePNG} alt="tênis" className="shoes" />
@@ -100,7 +112,10 @@ export function Home() {
         <div>
           <button type="button">
             <div className="button-style">
-              <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+              <div className="cart-sum">
+                <img src={cartIconSVG} alt="cart-icon" className="cart-icon" />
+                <p>0</p>
+              </div>
               <p>ADICIONAR AO CARRINHO</p>
             </div>
           </button>

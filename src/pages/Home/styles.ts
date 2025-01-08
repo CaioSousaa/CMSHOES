@@ -65,17 +65,26 @@ export const ProductList = styled.ul`
 
   .cart-icon {
     margin: 0 0.2rem 0 0.4rem;
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .button-style {
     display: flex;
     align-items: center;
     gap: 1rem;
+    height: 2rem;
   }
 
   li:nth-child(n + 4) {
     margin-top: 1rem;
+  }
+
+  .cart-sum {
+    display: flex;
+    background: rgb(108, 8, 202);
+    height: 100%;
+    align-items: center;
+    width: 3rem;
   }
 `;
