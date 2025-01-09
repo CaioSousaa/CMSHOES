@@ -87,4 +87,11 @@ export const ProductList = styled.ul`
     align-items: center;
     width: 3rem;
   }
+
+  #shoes-six {
+    padding-bottom: 3.2rem;
+  }
+  #shoes-five {
+    padding-bottom: 2.8rem;
+  }
 `;

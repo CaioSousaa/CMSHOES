@@ -14,20 +14,34 @@ createServer({
       products: [
         {
           id: 1,
-          description: "Tênis confortavel para corrida",
-          price: 179.9,
+          description: "Tênis Thunder - Ideal para treinos intensos",
+          price: 199.9,
         },
-
         {
           id: 2,
-          description: "Tênis estiloso e super confortavel",
-          price: 320.9,
+          description: "Tênis Urban Runner - Estilo e conforto na cidade",
+          price: 289.9,
         },
-
         {
           id: 3,
-          description: "Tênis azul perfeito para corridas a beira mar",
-          price: 159.9,
+          description:
+            "Tênis Ocean Breeze - Perfeito para corridas à beira-mar",
+          price: 179.9,
+        },
+        {
+          id: 4,
+          description: "Tênis Galaxy Star - Design moderno e durabilidade",
+          price: 259.9,
+        },
+        {
+          id: 5,
+          description: "Tênis Lightning Bolt - Para quem busca velocidade",
+          price: 299.9,
+        },
+        {
+          id: 6,
+          description: "Tênis Desert Trail - Ideal para aventuras em trilhas",
+          price: 239.9,
         },
       ],
     });
@@ -36,9 +50,12 @@ createServer({
   routes() {
     this.namespace = "/api";
 
-    this.get("/products", (schema, request) => {
-      const data = JSON.parse(request.requestBody);
+    this.get("/products", (schema) => {
+      return schema.all("product");
+    });
 
+    this.post("/products", (schema, request) => {
+      const data = JSON.parse(request.requestBody);
       return schema.create("product", data);
     });
   },
