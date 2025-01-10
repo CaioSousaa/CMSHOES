@@ -6,7 +6,7 @@ import shoesOnePNG from "../../assets/shoes-one.png";
 import shoesSixPNG from "../../assets/shoes-six.png";
 import shoesThreePNG from "../../assets/shoes-three.png";
 import shoesTwoPNG from "../../assets/shoes-two.png";
-import { useProducts } from "../../hooks/useProducts";
+import { useCart } from "../../hooks/useCart";
 
 // Mapeamento das imagens de acordo com o ID
 const shoeImages: { [key: number]: string } = {
@@ -19,7 +19,7 @@ const shoeImages: { [key: number]: string } = {
 };
 
 export function Home() {
-  const { products } = useProducts();
+  const { products } = useCart();
 
   if (!products || products.length === 0) {
     return <p>Carregando produtos...</p>;
