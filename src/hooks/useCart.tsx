@@ -13,11 +13,7 @@ interface Product {
   id: number;
   description: string;
   price: number;
-}
-
-interface ProductClick {
-  product: Product;
-  createdAt: Date;
+  quantity?: number;
 }
 
 interface CartProviderProps {
@@ -26,15 +22,16 @@ interface CartProviderProps {
 
 interface CartContextData {
   products: Product[];
-  carts: ProductClick[];
-  addProductInCart: (productClick: ProductClick) => void;
+  carts: Product[];
+  addProductInCart: (productId: number) => void;
+  getProductQuantity: (productId: number) => number;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
   const [products, setProducts] = useState<Product[]>([]);
-  const [carts, setCarts] = useState<ProductClick[]>([]);
+  const [carts, setCarts] = useState<Product[]>([]);
 
   useEffect(() => {
     api
@@ -42,12 +39,31 @@ export function CartProvider({ children }: CartProviderProps) {
       .then((response) => setProducts(response.data.products));
   }, []);
 
-  function addProductInCart(productClick: ProductClick) {
-    setCarts([...carts, productClick]);
+  function addProductInCart(productId: number) {
+    try {
+      const product = products.find((p) => p.id === productId);
+
+      if (product) {
+        setCarts((prevCarts) => [...prevCarts, product]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function getProductQuantity(productId: number): number {
+    return carts.filter((product) => product.id === productId).length;
   }
 
   return (
-    <CartContext.Provider value={{ products, carts, addProductInCart }}>
+    <CartContext.Provider
+      value={{
+        products,
+        carts,
+        addProductInCart,
+        getProductQuantity,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -55,6 +71,5 @@ export function CartProvider({ children }: CartProviderProps) {
 
 export function useCart() {
   const context = useContext(CartContext);
-
   return context;
 }

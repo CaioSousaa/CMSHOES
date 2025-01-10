@@ -8,7 +8,6 @@ import shoesThreePNG from "../../assets/shoes-three.png";
 import shoesTwoPNG from "../../assets/shoes-two.png";
 import { useCart } from "../../hooks/useCart";
 
-// Mapeamento das imagens de acordo com o ID
 const shoeImages: { [key: number]: string } = {
   1: shoesOnePNG,
   2: shoesTwoPNG,
@@ -19,11 +18,7 @@ const shoeImages: { [key: number]: string } = {
 };
 
 export function Home() {
-  const { products } = useCart();
-
-  if (!products || products.length === 0) {
-    return <p>Carregando produtos...</p>;
-  }
+  const { products, addProductInCart, getProductQuantity } = useCart();
 
   return (
     <ProductList>
@@ -39,7 +34,7 @@ export function Home() {
             <strong>R$ {product.price.toFixed(2)}</strong>
           </div>
           <div>
-            <button type="button">
+            <button type="button" onClick={() => addProductInCart(product.id)}>
               <div className="button-style">
                 <div className="cart-sum">
                   <img
@@ -47,7 +42,7 @@ export function Home() {
                     alt="cart-icon"
                     className="cart-icon"
                   />
-                  <p>0</p>
+                  <p>{getProductQuantity(product.id)}</p>
                 </div>
                 <p>ADICIONAR AO CARRINHO</p>
               </div>
