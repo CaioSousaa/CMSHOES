@@ -48,15 +48,10 @@ createServer({
   },
 
   routes() {
-    this.namespace = "/api";
+    this.namespace = "api";
 
-    this.get("/products", (schema) => {
-      return schema.all("product");
-    });
-
-    this.post("/products", (schema, request) => {
-      const data = JSON.parse(request.requestBody);
-      return schema.create("product", data);
+    this.get("/products", () => {
+      return this.schema.all("product");
     });
   },
 });
