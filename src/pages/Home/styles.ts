@@ -43,11 +43,15 @@ export const ProductList = styled.ul`
 
   .header {
     padding: 1.5rem;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
 
     img {
       width: 100%;
       height: auto;
       object-fit: contain;
+      min-height: 14rem;
     }
 
     strong {
@@ -86,12 +90,5 @@ export const ProductList = styled.ul`
     height: 100%;
     align-items: center;
     width: 3rem;
-  }
-
-  #shoes-six {
-    padding-bottom: 3.2rem;
-  }
-  #shoes-five {
-    padding-bottom: 2.8rem;
   }
 `;
