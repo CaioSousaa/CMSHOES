@@ -27,7 +27,9 @@ export function Header() {
           </div>
 
           <div className="icon">
-            <img src={cartSVG} alt="cart" className="cart" />
+            <Link to="/cart">
+              <img src={cartSVG} alt="cart" className="cart" />
+            </Link>
           </div>
         </div>
       </Content>
