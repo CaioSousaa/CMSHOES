@@ -1,5 +1,6 @@
 import { Container, Content } from "./styles";
 
+import { Link } from "react-router-dom";
 import cartSVG from "../../assets/cart-1.svg";
 import logoSVG from "../../assets/logo.svg";
 import { useCart } from "../../hooks/useCart";
@@ -12,7 +13,9 @@ export function Header() {
     <Container>
       <Content>
         <header>
-          <img src={logoSVG} alt="logo" />
+          <Link to="/">
+            <img src={logoSVG} alt="logo" />
+          </Link>
         </header>
 
         <div className="infos">

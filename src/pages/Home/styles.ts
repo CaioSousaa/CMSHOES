@@ -89,6 +89,10 @@ export const ProductList = styled.ul`
     background: rgb(108, 8, 202);
     height: 100%;
     align-items: center;
-    width: 3rem;
+    width: 3.4rem;
+
+    p {
+      padding-left: 0.15rem;
+    }
   }
 `;

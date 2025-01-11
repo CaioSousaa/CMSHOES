@@ -1,3 +1,4 @@
+import { AppRoutes } from "./routes";
 import { CartProvider } from "./hooks/useCart";
 import { Global } from "./styles/global";
 import { Header } from "./components/Header";
@@ -8,6 +9,7 @@ export function App() {
     <CartProvider>
       <Header />
       <Home />
+      <AppRoutes />
       <Global />
     </CartProvider>
   );
