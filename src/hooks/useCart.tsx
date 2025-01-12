@@ -13,7 +13,7 @@ interface Product {
   id: number;
   description: string;
   price: number;
-  quantity?: number;
+  quantity: number;
 }
 
 interface CartProviderProps {
@@ -23,10 +23,11 @@ interface CartProviderProps {
 interface CartContextData {
   products: Product[];
   carts: Product[];
-  productsInCart: Product[];
   addProductInCart: (productId: number) => void;
   getProductQuantity: (productId: number) => number;
   handleRemoveProductOfCart: (productId: number) => void;
+  handleDecrementCart: (productId: number) => void;
+  handleIncrementCart: (productId: number) => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -34,7 +35,6 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 export function CartProvider({ children }: CartProviderProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [carts, setCarts] = useState<Product[]>([]);
-  const [productsInCart, setProductsInCart] = useState<Product[]>([]);
 
   useEffect(() => {
     api
@@ -43,49 +43,67 @@ export function CartProvider({ children }: CartProviderProps) {
   }, []);
 
   function addProductInCart(productId: number) {
-    try {
-      const product = products.find((p) => p.id === productId);
+    setCarts((prevCarts) => {
+      const existingProduct = prevCarts.find(
+        (product) => product.id === productId
+      );
 
-      if (product) {
-        setCarts((prevCarts) => [...prevCarts, product]);
+      if (existingProduct) {
+        return prevCarts.map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity + 1 }
+            : product
+        );
       }
-    } catch (error) {
-      console.log(error);
-    }
+
+      const productToAdd = products.find((product) => product.id === productId);
+      if (productToAdd) {
+        return [...prevCarts, { ...productToAdd, quantity: 1 }];
+      }
+
+      return prevCarts;
+    });
   }
 
   function getProductQuantity(productId: number): number {
-    return carts.filter((product) => product.id === productId).length;
+    const product = carts.find((p) => p.id === productId);
+    return product ? product.quantity : 0;
   }
 
-  useEffect(() => {
-    const uniqueProducts = carts.reduce<Product[]>((acc, product) => {
-      if (!acc.some((p) => p.id === product.id)) {
-        return [...acc, product];
-      }
-      return acc;
-    }, []);
+  function handleDecrementCart(productId: number) {
+    setCarts((prevCarts) =>
+      prevCarts
+        .map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        )
+        .filter((product) => product.quantity > 0)
+    );
+  }
 
-    setProductsInCart(uniqueProducts);
-  }, [carts]);
+  function handleIncrementCart(productId: number) {
+    setCarts((prevCarts) =>
+      prevCarts
+        .map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity + 1 }
+            : product
+        )
+        .filter((product) => product.quantity > 0)
+    );
+  }
 
   function handleRemoveProductOfCart(productId: number) {
-    setCarts((prevCarts) => {
-      const updatedCarts = prevCarts
-        .map((product) => {
-          if (product.id === productId) {
-            if (product.quantity && product.quantity > 1) {
-              return { ...product, quantity: product.quantity - 1 };
-            }
-
-            return null;
-          }
-          return product;
-        })
-        .filter((product) => product !== null) as Product[];
-
-      return updatedCarts;
-    });
+    setCarts((prevCarts) =>
+      prevCarts
+        .map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        )
+        .filter((product) => product.quantity > 0)
+    );
   }
 
   return (
@@ -93,10 +111,11 @@ export function CartProvider({ children }: CartProviderProps) {
       value={{
         products,
         carts,
-        productsInCart,
         addProductInCart,
         getProductQuantity,
         handleRemoveProductOfCart,
+        handleDecrementCart,
+        handleIncrementCart,
       }}
     >
       {children}

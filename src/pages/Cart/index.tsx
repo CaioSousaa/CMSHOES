@@ -21,16 +21,34 @@ const shoeImages: { [key: number]: string } = {
 };
 
 export function Cart() {
-  const { getProductQuantity, productsInCart, handleRemoveProductOfCart } =
-    useCart();
+  const {
+    getProductQuantity,
+    carts,
+    handleRemoveProductOfCart,
+    handleDecrementCart,
+    handleIncrementCart,
+  } = useCart();
 
-  function handleSubtotal(productId: number) {
-    const product = productsInCart.find((p) => p.id === productId);
+  console.log(carts);
+
+  function onSubtotal(productId: number) {
+    const product = carts.find((p) => p.id === productId);
 
     if (product && product.price !== undefined) {
       const productQtd = getProductQuantity(productId);
       return product.price * productQtd;
     }
+  }
+
+  function onTotalPurchaseInCart() {
+    const cart = [...carts];
+
+    const total = cart.reduce((acc, product) => {
+      const subTotal = onSubtotal(product.id);
+      return subTotal !== undefined ? acc + subTotal : acc;
+    }, 0);
+
+    return total;
   }
 
   return (
@@ -45,7 +63,7 @@ export function Cart() {
         </thead>
 
         <tbody>
-          {productsInCart.map((product) => (
+          {carts.map((product) => (
             <tr className="container" key={product.id}>
               <td>
                 <div className="product-info">
@@ -70,19 +88,29 @@ export function Cart() {
 
               <td>
                 <div className="qtd-container">
-                  <img src={minusSVG} alt="minus" className="assets" />
+                  <img
+                    src={minusSVG}
+                    alt="minus"
+                    className="assets"
+                    onClick={() => handleDecrementCart(product.id)}
+                  />
                   <input
                     type="number"
                     min="0"
                     value={getProductQuantity(product.id)}
                     readOnly
                   />
-                  <img src={plusSVG} alt="plus" className="assets" />
+                  <img
+                    src={plusSVG}
+                    alt="plus"
+                    className="assets"
+                    onClick={() => handleIncrementCart(product.id)}
+                  />
                 </div>
               </td>
 
               <td>
-                <p>R$ {handleSubtotal(product.id)}</p>
+                <p>R$ {onSubtotal(product.id)}</p>
               </td>
               <td>
                 <img
@@ -102,7 +130,12 @@ export function Cart() {
 
         <div className="ttl">
           <p>TOTAL</p>
-          <strong>R$ 399.8</strong>
+          <strong>
+            {new Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }).format(onTotalPurchaseInCart())}
+          </strong>
         </div>
       </Content>
     </ProductInCart>
