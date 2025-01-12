@@ -38,6 +38,8 @@ export function Cart() {
       const productQtd = getProductQuantity(productId);
       return product.price * productQtd;
     }
+
+    return 0;
   }
 
   function onTotalPurchaseInCart() {
@@ -110,7 +112,12 @@ export function Cart() {
               </td>
 
               <td>
-                <p>R$ {onSubtotal(product.id)}</p>
+                <p>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(onSubtotal(product.id))}
+                </p>
               </td>
               <td>
                 <img
