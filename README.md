@@ -1,50 +1,30 @@
-# React + TypeScript + Vite
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://cdn.freebiesupply.com/logos/large/2x/react-1-logo-svg-vector.svg" width="200" alt="React logo" /></a>
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+### Descrição
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este projeto é a solução de um desafio do curso de React da empresa <a href="https://app.rocketseat.com.br/">Rocketseat.</a> Nele, foi pedido uma aplicação que focasse apenas na criação de um hook que gerenciasse o carrinhos de compras.
 
-## Expanding the ESLint configuration
+A aplicação é uma forma básica de e-commerce, onde são vendidos calcados, em geral. Optei em utilizar apenas imagens de sapatos para ficar algo mais agradável visualmente. Sobre o carrinho, ao clicar no botão adicionar ao carrinho, o produto será enviado para o carrinho, onde no header irá mostrar apenas os diferentes itens que estão dentro do carrinho e no carrinho do produto irá mostrar a quantidade daquele produto dentro do carrinho. Na página do carrinho, temos a descrição do produto, botoes que incrementam e decrementam a quantidade do mesmo, o subtotal que aquele produto está gerando e uma lixeira que remove todas as cópias daquele produto do carrinho.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Tecnologias utilizadas no projeto
 
-- Configure the top-level `parserOptions` property like this:
+- NodeJs
+- React
+- Mirage.js
+- Styled Components
+- Typescript
+- Entre outros
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Home
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+![Tela Inicial](./img/home.png)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Cart
+
+![Modal](./img/cart.png)
