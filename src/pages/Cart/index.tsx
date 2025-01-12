@@ -2,10 +2,37 @@ import { Content, ProductInCart } from "./styles";
 
 import minusSVG from "../../assets/minus.svg";
 import plusSVG from "../../assets/plus.svg";
+import shoesFivePNG from "../../assets/shoes-five.png";
+import shoesFourPNG from "../../assets/shoes-four.png";
 import shoesOnePNG from "../../assets/shoes-one.png";
+import shoesSixPNG from "../../assets/shoes-six.png";
+import shoesThreePNG from "../../assets/shoes-three.png";
+import shoesTwoPNG from "../../assets/shoes-two.png";
 import trashSVG from "../../assets/trash.svg";
+import { useCart } from "../../hooks/useCart";
+
+const shoeImages: { [key: number]: string } = {
+  1: shoesOnePNG,
+  2: shoesTwoPNG,
+  3: shoesThreePNG,
+  4: shoesFourPNG,
+  5: shoesFivePNG,
+  6: shoesSixPNG,
+};
 
 export function Cart() {
+  const { getProductQuantity, productsInCart, handleRemoveProductOfCart } =
+    useCart();
+
+  function handleSubtotal(productId: number) {
+    const product = productsInCart.find((p) => p.id === productId);
+
+    if (product && product.price !== undefined) {
+      const productQtd = getProductQuantity(productId);
+      return product.price * productQtd;
+    }
+  }
+
   return (
     <ProductInCart>
       <table>
@@ -18,63 +45,55 @@ export function Cart() {
         </thead>
 
         <tbody>
-          <tr className="container">
-            <td>
-              <div className="product-info">
-                <div>
-                  <img src={shoesOnePNG} alt="Tênis" className="shoes" />
+          {productsInCart.map((product) => (
+            <tr className="container" key={product.id}>
+              <td>
+                <div className="product-info">
+                  <div>
+                    <img
+                      src={shoeImages[product.id]}
+                      alt="Tênis"
+                      className="shoes"
+                    />
+                  </div>
+                  <div className="description-product">
+                    <span>{product.description}</span>
+                    <strong>
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(product.price)}
+                    </strong>
+                  </div>
                 </div>
-                <div className="description-product">
-                  <span>Tênis Thunder - Ideal para treinos intensos</span>
-                  <strong>R$ 199.90</strong>
+              </td>
+
+              <td>
+                <div className="qtd-container">
+                  <img src={minusSVG} alt="minus" className="assets" />
+                  <input
+                    type="number"
+                    min="0"
+                    value={getProductQuantity(product.id)}
+                    readOnly
+                  />
+                  <img src={plusSVG} alt="plus" className="assets" />
                 </div>
-              </div>
-            </td>
+              </td>
 
-            <td>
-              <div className="qtd-container">
-                <img src={minusSVG} alt="minus" className="assets" />
-                <input type="number" min="0" placeholder="0" />
-                <img src={plusSVG} alt="plus" className="assets" />
-              </div>
-            </td>
-
-            <td>
-              <p>R$ 199.90</p>
-            </td>
-            <td>
-              <img src={trashSVG} alt="trash" className="assets" />
-            </td>
-          </tr>
-
-          <tr className="container">
-            <td>
-              <div className="product-info">
-                <div>
-                  <img src={shoesOnePNG} alt="Tênis" className="shoes" />
-                </div>
-                <div className="description-product">
-                  <span>Tênis Thunder - Ideal para treinos intensos</span>
-                  <strong>R$ 199.90</strong>
-                </div>
-              </div>
-            </td>
-
-            <td>
-              <div className="qtd-container">
-                <img src={minusSVG} alt="minus" className="assets" />
-                <input type="number" min="0" placeholder="0" />
-                <img src={plusSVG} alt="plus" className="assets" />
-              </div>
-            </td>
-
-            <td>
-              <p>R$ 199.90</p>
-            </td>
-            <td>
-              <img src={trashSVG} alt="trash" className="assets" id="trash" />
-            </td>
-          </tr>
+              <td>
+                <p>R$ {handleSubtotal(product.id)}</p>
+              </td>
+              <td>
+                <img
+                  src={trashSVG}
+                  alt="trash"
+                  className="assets"
+                  onClick={() => handleRemoveProductOfCart(product.id)}
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 

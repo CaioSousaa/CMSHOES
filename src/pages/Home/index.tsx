@@ -31,7 +31,12 @@ export function Home() {
               className="shoes"
             />
             <span>{product.description}</span>
-            <strong>R$ {product.price.toFixed(2)}</strong>
+            <strong>
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(product.price)}
+            </strong>
           </div>
           <div>
             <button type="button" onClick={() => addProductInCart(product.id)}>

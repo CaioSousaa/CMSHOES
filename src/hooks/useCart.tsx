@@ -23,8 +23,10 @@ interface CartProviderProps {
 interface CartContextData {
   products: Product[];
   carts: Product[];
+  productsInCart: Product[];
   addProductInCart: (productId: number) => void;
   getProductQuantity: (productId: number) => number;
+  handleRemoveProductOfCart: (productId: number) => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -32,6 +34,7 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 export function CartProvider({ children }: CartProviderProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [carts, setCarts] = useState<Product[]>([]);
+  const [productsInCart, setProductsInCart] = useState<Product[]>([]);
 
   useEffect(() => {
     api
@@ -55,13 +58,45 @@ export function CartProvider({ children }: CartProviderProps) {
     return carts.filter((product) => product.id === productId).length;
   }
 
+  useEffect(() => {
+    const uniqueProducts = carts.reduce<Product[]>((acc, product) => {
+      if (!acc.some((p) => p.id === product.id)) {
+        return [...acc, product];
+      }
+      return acc;
+    }, []);
+
+    setProductsInCart(uniqueProducts);
+  }, [carts]);
+
+  function handleRemoveProductOfCart(productId: number) {
+    setCarts((prevCarts) => {
+      const updatedCarts = prevCarts
+        .map((product) => {
+          if (product.id === productId) {
+            if (product.quantity && product.quantity > 1) {
+              return { ...product, quantity: product.quantity - 1 };
+            }
+
+            return null;
+          }
+          return product;
+        })
+        .filter((product) => product !== null) as Product[];
+
+      return updatedCarts;
+    });
+  }
+
   return (
     <CartContext.Provider
       value={{
         products,
         carts,
+        productsInCart,
         addProductInCart,
         getProductQuantity,
+        handleRemoveProductOfCart,
       }}
     >
       {children}
