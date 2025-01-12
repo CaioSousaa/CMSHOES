@@ -98,9 +98,7 @@ export function CartProvider({ children }: CartProviderProps) {
     setCarts((prevCarts) =>
       prevCarts
         .map((product) =>
-          product.id === productId
-            ? { ...product, quantity: product.quantity - 1 }
-            : product
+          product.id === productId ? { ...product, quantity: 0 } : product
         )
         .filter((product) => product.quantity > 0)
     );
